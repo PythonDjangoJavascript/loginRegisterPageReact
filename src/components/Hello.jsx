@@ -4,35 +4,62 @@ import Input from "./Input";
 
 function Hello()
 {
-    const [headingText, setHeadingTest] = useState("")
-    function handleClieck(event)
-    {
-        setHeadingTest("Hello " + headingText + "!");
-        event.preventDefault()
-    }
+    const [contact, setContact] = useState({
+        email: "",
+        fName: "",
+        lName: ""
+    })
     const [isMouseOver, setIsMouseOver] = useState(false)
+
+    function handleChange(event)
+    {
+        const { name, value } = event.target;
+        setContact(previousValue =>
+        {
+            return ({
+                ...previousValue,
+                [name]: value
+            })
+        })
+    }
+
 
     function mouseOver()
     {
         setIsMouseOver(true)
     }
+
     function mouseOut()
     {
         setIsMouseOver(false)
     }
-    function handleChange(event)
-    {
-        setHeadingTest(event.target.value)
-    }
+
+
     return (
         <div className="container">
-            <form onSubmit={handleClieck} >
-                <h1>{headingText}</h1>
+            <form >
+                <h1 id="heading">{contact.fName} {contact.lName}</h1>
+                <p>{contact.email}</p>
                 <Input
+                    name="fName"
                     onChange={handleChange}
                     inputType="text"
-                    inputPlaceholder="What's your name?"
-                    value={headingText}
+                    inputPlaceholder="First name"
+                    value={contact.fName}
+                />
+                <Input
+                    name="lName"
+                    onChange={handleChange}
+                    inputType="test"
+                    inputPlaceholder="Last Name"
+                    value={contact.lName}
+                />
+                <Input
+                    name="email"
+                    onChange={handleChange}
+                    inputType="test"
+                    inputPlaceholder="Last Name"
+                    value={contact.email}
                 />
                 <button
                     type="submit"
